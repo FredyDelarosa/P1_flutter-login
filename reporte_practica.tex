@@ -1,0 +1,322 @@
+\documentclass[12pt, a4paper]{article}
+
+% --- PAQUETES ESENCIALES ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage[table]{xcolor}
+\usepackage{listings}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{titlesec}
+
+\addto{\captionsspanish}{\renewcommand{\lstlistingname}{Comando}}
+\addto{\captionsspanish}{\renewcommand{\lstlistlistingname}{Listado de Comandos}}
+
+% --- PAQUETE EXTRA PARA NOMBRES CON ESPACIOS ---
+\usepackage[space]{grffile}
+
+% --- ESQUEMA DE COLORES: BLANCO Y NEGRO MINIMALISTA ---
+\definecolor{GrisClaro}{rgb}{0.93, 0.93, 0.93}
+\definecolor{GrisMedio}{rgb}{0.50, 0.50, 0.50}
+
+% --- ESTILO DE CÓDIGO: MINIMALISTA SIN COLORES ---
+\lstset{
+    language=bash,
+    backgroundcolor=\color{GrisClaro},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    showstringspaces=false,
+    numbers=left,
+    numberstyle=\tiny\color{GrisMedio},
+    frame=single,
+    framesep=6pt,
+    framexleftmargin=8pt,
+    rulecolor=\color{black},
+    keywordstyle=\bfseries,
+    commentstyle=\itshape,
+    stringstyle=\normalfont,
+    xleftmargin=16pt,
+    aboveskip=10pt,
+    belowskip=10pt,
+}
+
+% --- CONFIGURACIÓN DE MÁRGENES ---
+\geometry{
+    a4paper,
+    left=25mm,
+    right=25mm,
+    top=30mm,
+    bottom=30mm,
+}
+
+% --- ESPACIADO DE SECCIONES CON titlesec ---
+\titlespacing*{\section}      {0pt}{20pt}{8pt}
+\titlespacing*{\subsection}   {0pt}{14pt}{6pt}
+\titlespacing*{\subsubsection}{0pt}{10pt}{4pt}
+
+% --- ESTILO DE TÍTULOS DE SECCIÓN ---
+\titleformat{\section}
+    {\large\bfseries}{\thesection}{1em}{}[\titlerule]
+
+\titleformat{\subsection}
+    {\normalsize\bfseries}{\thesubsection}{1em}{}
+
+% --- CONFIGURACIÓN DE ENCABEZADOS Y PIES ---
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhead[L]{\small\textit{\nombremateria\ /\ \actividad}}
+\fancyhead[R]{\small\textit{\nombres}}
+\fancyfoot[R]{\thepage}
+\fancyfoot[L]{\small\textit{\ciudad}}
+
+\fancypagestyle{portada}{
+    \fancyhf{}
+    \renewcommand{\headrulewidth}{0pt}
+}
+
+% --- CONFIGURACIÓN DE HYPERREF ---
+\hypersetup{
+    colorlinks=false,
+    hidelinks,
+}
+
+% --- DATOS DEL DOCUMENTO ---
+\newcommand{\nombreuniversidad}{Universidad Politécnica de Chiapas}
+\newcommand{\nombrecarrera}{Ingeniería en Software}
+\newcommand{\nombremateria}{Seguridad de la Información}
+\newcommand{\nombreprofesor}{Jose Alonso Macias Montoya}
+\newcommand{\corte}{1}
+\newcommand{\actividad}{Detección de ubicaciones falsas y bloqueo preventivo de la aplicación}
+\newcommand{\nombres}{De la Rosa Rojas Fredy}
+\newcommand{\matricula}{233317}
+\newcommand{\fechaentrega}{\today}
+\newcommand{\ciudad}{Tuxtla Gutiérrez, Chiapas}
+
+% --- INICIO DEL DOCUMENTO ---
+\begin{document}
+
+% --- PORTADA ---
+\begin{titlepage}
+\thispagestyle{portada}
+\centering
+
+    \vspace*{2cm}
+    {\LARGE\bfseries \nombreuniversidad \par}
+    \vspace{0.4cm}
+    {\large \nombrecarrera \par}
+
+    \vspace{2.5cm}
+    \rule{\textwidth}{1.5pt}
+    \vspace{0.5cm}
+    {\Large\bfseries Reporte de Práctica \par}
+    \vspace{0.3cm}
+    {\large \actividad \par}
+    \vspace{0.5cm}
+    \rule{\textwidth}{1.5pt}
+
+    \vspace{3cm}
+
+    \begin{tabular}{rl}
+        \textbf{Materia:}    & \nombremateria \\[6pt]
+        \textbf{Profesor:}   & \nombreprofesor \\[6pt]
+        \textbf{Corte:}      & \corte \\[18pt]
+        \textbf{Alumno:}     & \nombres \\[6pt]
+        \textbf{Matrícula:}  & \matricula \\
+    \end{tabular}
+
+    \vfill
+
+    {\normalsize \ciudad, a \fechaentrega}
+
+\end{titlepage}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+% --- CUERPO DEL TRABAJO ---
+
+\section*{Información General}
+\addcontentsline{toc}{section}{Información General}
+
+\textbf{Datos del Estudiante}
+\begin{itemize}[noitemsep, topsep=4pt]
+    \item \textbf{Matrícula:} \matricula
+    \item \textbf{Nombre del estudiante:} \nombres
+    \item \textbf{Carrera / Grupo:} \nombrecarrera
+    \item \textbf{Correo institucional:} 233317@ids.upchiapas.edu.mx
+\end{itemize}
+
+\vspace{8pt}
+\textbf{Datos de la Práctica}
+\begin{itemize}[noitemsep, topsep=4pt]
+    \item \textbf{Nombre del laboratorio:} \actividad
+    \item \textbf{Módulo / Unidad:} \corte
+    \item \textbf{Fecha de entrega:} \fechaentrega
+    \item \textbf{Tiempo estimado:} 3 horas
+    \item \textbf{Tiempo real:} 4 horas
+    \item \textbf{Repositorio:} \url{https://github.com/FredyDelarosa/P1_flutter-login.git}
+\end{itemize}
+
+\vspace{10pt}
+\hrule
+\vspace{10pt}
+
+\section{Objetivo del Laboratorio}
+
+\subsection*{Objetivo General}
+Desarrollar una aplicación Flutter capaz de detectar si el dispositivo ejecuta o simula ubicaciones falsas y, en ese caso, bloquear el acceso a la interfaz principal para reducir el riesgo de manipulación del entorno.
+
+\subsection*{Objetivos Específicos}
+\begin{itemize}[topsep=4pt]
+    \item Integrar permisos de ubicación y validaciones del estado del GPS para obtener contexto confiable del dispositivo.
+    \item Utilizar varias fuentes de verificación, incluyendo \textit{safe\_device}, \textit{geolocator} y \textit{detect\_fake\_location}, para identificar una ubicación simulada.
+    \item Bloquear la aplicación con una pantalla de seguridad cuando se detecte una app de ubicación falsa activa o una posición marcada como mock.
+\end{itemize}
+
+\subsection*{Resultados Esperados}
+Al finalizar la práctica, la aplicación debe iniciarse con una verificación automática de seguridad, detectar ubicaciones falsas cuando estén activas y mostrar una pantalla de bloqueo que impida continuar con el uso normal de la app.
+
+\section{Materiales y Entorno}
+
+\subsection*{Sistemas Operativos}
+\begin{itemize}[topsep=4pt]
+    \item Linux de 64 bits como entorno de desarrollo.
+    \item Android como plataforma principal de prueba.
+    \item iOS y escritorio como entornos compatibles del proyecto Flutter, aunque la validación de seguridad se centró en Android.
+\end{itemize}
+
+\subsection*{Herramientas / Frameworks / Repositorio}
+\begin{itemize}[topsep=4pt]
+    \item Flutter SDK y Dart.
+    \item Visual Studio Code.
+    \item Android Studio / emulador Android para pruebas.
+    \item Repositorio GitHub para control de versiones.
+    \item Paquetes \textit{permission\_handler}, \textit{safe\_device}, \textit{geolocator} y \textit{detect\_fake\_location}.
+\end{itemize}
+
+\subsection*{Datos / Políticas / Estándares / Buenas prácticas}
+\begin{itemize}[topsep=4pt]
+    \item Principio de confidencialidad en el manejo de credenciales.
+    \item Verificación del contexto del dispositivo antes de conceder acceso a funciones sensibles.
+    \item Buenas prácticas de defensa contra manipulación de ubicación y uso de simuladores de GPS.
+    \item Uso de widgets con ciclo de vida controlado para activar y repetir la validación de seguridad.
+\end{itemize}
+
+\subsection*{Hardware}
+\begin{itemize}[topsep=4pt]
+    \item Laptop de desarrollo con soporte para emulador Android.
+    \item Memoria RAM suficiente para ejecutar Flutter, VS Code y Android Studio.
+    \item Almacenamiento local para el proyecto, dependencias y compilaciones generadas.
+\end{itemize}
+
+\section{Procedimiento}
+
+\subsection*{Paso 1: Integración de dependencias de seguridad}
+\textbf{Descripción:} Se actualizaron las dependencias del proyecto para incorporar validaciones de contexto en el dispositivo. En el archivo \texttt{pubspec.yaml} se agregaron las librerías necesarias para solicitar permisos, detectar ubicación simulada y consultar el estado de seguridad del equipo.\\[4pt]
+\textbf{Evidencia:}
+\begin{lstlisting}[caption={Comandos ejecutados en el Paso 1}]
+flutter pub add permission_handler safe_device geolocator detect_fake_location
+flutter pub get
+\end{lstlisting}
+
+\subsection*{Paso 2: Implementación del verificador global de seguridad}
+\textbf{Descripción:} Se creó \texttt{GlobalSecurityGatekeeper} como envoltura principal de la aplicación. Este componente observa el ciclo de vida, solicita permiso de ubicación y evalúa tres comprobaciones en paralelo: \textit{SafeDevice.isMockLocation}, la propiedad \texttt{isMocked} obtenida con \textit{geolocator} y el resultado de \textit{detect\_fake\_location}. Si cualquiera de ellas confirma una ubicación simulada, la aplicación cambia automáticamente a la pantalla de bloqueo.\\[4pt]
+\textbf{Evidencia:}
+\begin{lstlisting}[caption={Comandos ejecutados en el Paso 2}]
+flutter analyze
+flutter pub get
+flutter run
+\end{lstlisting}
+
+\subsection*{Paso 3: Bloqueo y validación del flujo de respuesta}
+\textbf{Descripción:} Se implementó la pantalla \texttt{SecurityBlockedScreen} para responder ante el hallazgo de una ubicación falsa. La interfaz muestra un aviso de acceso denegado, explica la causa del bloqueo y ofrece una salida segura de la aplicación. También se valida nuevamente el estado de seguridad cuando la app vuelve al primer plano, de modo que el bloqueo persiste si el entorno sigue siendo riesgoso.\\[4pt]
+\textbf{Evidencia:}
+\begin{lstlisting}[caption={Comandos ejecutados en el Paso 3}]
+flutter test
+flutter run
+\end{lstlisting}
+
+\section{Resultados Observados}
+
+\subsection*{Resultados Obtenidos}
+La aplicación ahora realiza una verificación automática al iniciar y al reanudar su ejecución. Cuando el dispositivo reporta una ubicación simulada o una app de fake GPS activa, la interfaz se reemplaza por una pantalla de bloqueo con un mensaje explícito de acceso denegado. Si no se detecta riesgo, la aplicación continúa con su flujo normal de login y navegación.
+
+\subsection*{Comparación con lo Esperado}
+Los resultados coinciden con lo planteado en los objetivos. Se logró detectar el uso de ubicaciones falsas mediante más de una estrategia de validación y se implementó una respuesta preventiva clara mediante el bloqueo de la aplicación. La única variación observada fue que algunas comprobaciones dependen de permisos y del estado del GPS, por lo que el comportamiento puede cambiar según el dispositivo de prueba.
+
+\section{Interpretación y Reflexiones}
+
+\subsection*{Fundamento Teórico}
+La práctica se relaciona con el principio de integridad y con el control del contexto de ejecución, ya que la aplicación no confía por completo en el entorno del dispositivo cuando detecta señales de manipulación como una ubicación simulada. También se aplicó el uso del ciclo de vida de Flutter para repetir la validación de seguridad cuando la app regresa al primer plano.
+
+\subsection*{Conexión Académica}
+La actividad se vincula con los temas de seguridad de la información revisados en clase, especialmente la detección de condiciones inseguras, la protección del acceso a funciones críticas y la validación del entorno antes de confiar en él. Asimismo, refuerza el uso de herramientas externas como apoyo para implementar controles de seguridad concretos en aplicaciones móviles.
+
+\section{Obstáculos o Errores Identificados}
+
+\subsection*{Problema 1}
+\textbf{Descripción del error:} La detección de ubicación falsa dependía de permisos de localización, por lo que en algunos dispositivos la verificación no avanzaba si el permiso era rechazado o si el GPS estaba desactivado.\\[4pt]
+\textbf{Solución aplicada:} Se pidió el permiso en tiempo de ejecución con \textit{permission\_handler} y se agregó una comprobación defensiva para continuar con la validación aun cuando el estado del permiso no fuera ideal.
+
+\subsection*{Problema 2}
+\textbf{Descripción del error:} Algunas bibliotecas no coincidían en el criterio de detección y podían devolver resultados distintos según el emulador o el estado del dispositivo.\\[4pt]
+\textbf{Solución aplicada:} Se combinaron tres fuentes de verificación en paralelo y se tomó la decisión de bloqueo cuando cualquiera de ellas reportó mock location, reduciendo la posibilidad de falsos negativos.
+
+\section{Conclusión y Aprendizaje}
+
+\subsection*{Reflexión Final}
+La práctica permitió aplicar conceptos de seguridad de la información dentro de una aplicación móvil real con un enfoque preventivo. Se comprendió mejor cómo validar el contexto del dispositivo antes de confiar en él y cómo responder ante condiciones inseguras bloqueando la ejecución normal. Además, se reforzaron habilidades de organización de código, observación del ciclo de vida y uso de varias librerías de seguridad en Flutter.
+
+\subsection*{Competencias Adquiridas}
+\begin{itemize}[topsep=4pt]
+    \item \textbf{Habilidad técnica 1:} Implementación de validaciones de seguridad al iniciar la aplicación.
+    \item \textbf{Habilidad técnica 2:} Integración de paquetes externos para detectar ubicaciones falsas en Flutter.
+    \item \textbf{Concepto reforzado:} Confianza condicionada al contexto del dispositivo.
+    \item \textbf{Área de mejora:} Profundizar en correlación con backend y políticas más robustas de verificación.
+\end{itemize}
+
+\subsection*{Preguntas de Autoevaluación}
+
+\textbf{¿Qué sabía antes?}\\[4pt]
+Sabía que Flutter permite construir interfaces móviles de forma rápida y que existen paquetes para revisar seguridad del dispositivo, pero no había integrado una validación completa contra ubicaciones falsas al arranque de la aplicación.
+
+\vspace{6pt}
+\textbf{¿Qué aprendí?}\\[4pt]
+Aprendí a estructurar una app Flutter con un guardián global de seguridad, a combinar varias fuentes de detección de mock location y a bloquear la interfaz cuando el entorno del dispositivo no es confiable.
+
+\vspace{6pt}
+\textbf{¿Qué quiero explorar más?}\\[4pt]
+Quiero profundizar en detección de root/jailbreak, validación remota del dispositivo, políticas antifraude y mecanismos más avanzados para reforzar la integridad del entorno móvil.
+
+\section{Prompts Utilizados}
+
+Durante el desarrollo de la práctica se consultaron los siguientes prompts para orientar la implementación y validar decisiones técnicas:
+
+\begin{enumerate}[topsep=4pt]
+    \item ¿Qué librerías para verificar la ubicación existen en Flutter?
+    \item ¿Cómo implementar detect\_fake\_location?
+    \item ¿Cómo implementar más de una verificación de localización?
+    \item ¿Cómo funciona el ciclo de vida en aplicaciones Flutter?
+    \item ¿Cómo funcionan los estados en aplicaciones Flutter?
+\end{enumerate}
+
+Estos prompts sirvieron como guía para seleccionar dependencias, estructurar la validación de seguridad y controlar la respuesta de la aplicación ante cambios de estado y del ciclo de vida.
+
+\section{Bibliografía y Fuentes Consultadas}
+\begin{enumerate}[topsep=4pt]
+    \item Flutter Team. Documentación oficial de Flutter. \url{https://docs.flutter.dev/}
+    \item Paquetes \textit{permission\_handler}, \textit{safe\_device}, \textit{geolocator} y \textit{detect\_fake\_location}. Documentación y referencias de pub.dev.
+    \item Material de clase sobre confidencialidad, integridad y validación de contexto en aplicaciones móviles.
+\end{enumerate}
+
+\end{document}
