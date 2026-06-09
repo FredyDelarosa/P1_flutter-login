@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "260184257179",
+    "project_id": "fmc-seguridad",
+    "storage_bucket": "fmc-seguridad.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260184257179:android:d0176e90cb904788fd4c3e",
+        "android_client_info": {
+          "package_name": "com.example.p1"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBBZi_fREztYVinx3KJngJfi2G4YM7krF0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

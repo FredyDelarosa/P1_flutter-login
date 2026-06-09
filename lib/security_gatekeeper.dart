@@ -16,6 +16,7 @@ class GlobalSecurityGatekeeper extends StatefulWidget {
 class _GlobalSecurityGatekeeperState extends State<GlobalSecurityGatekeeper> with WidgetsBindingObserver {
   bool _isMockLocation = false;
   bool _isLoading = true;
+  int _securityCheckToken = 0;
 
   @override
   void initState() {
@@ -40,7 +41,9 @@ class _GlobalSecurityGatekeeperState extends State<GlobalSecurityGatekeeper> wit
   }
 
   Future<void> _checkSecurity() async {
-    if (!_isMockLocation) {
+    final int currentToken = ++_securityCheckToken;
+
+    if (mounted) {
       setState(() {
         _isLoading = true;
       });
@@ -57,15 +60,11 @@ class _GlobalSecurityGatekeeperState extends State<GlobalSecurityGatekeeper> wit
       bool isMockDetectFake = false;
 
       if (status.isGranted) {
-        final results = await Future.wait([
-          SafeDevice.isMockLocation,
-          _getGeolocatorMock(),
-          _getDetectFakeLocationMock(),
-        ]);
+        final results = await _collectMockLocationSignals();
 
-        isMockSafeDevice = results[0];
-        isMockGeolocator = results[1];
-        isMockDetectFake = results[2];
+        isMockSafeDevice = results.$1;
+        isMockGeolocator = results.$2;
+        isMockDetectFake = results.$3;
 
         debugPrint('--- RESULTADOS DE SEGURIDAD ---');
         debugPrint('SafeDevice Mock: $isMockSafeDevice');
@@ -74,23 +73,59 @@ class _GlobalSecurityGatekeeperState extends State<GlobalSecurityGatekeeper> wit
         debugPrint('Real Device: ${await SafeDevice.isRealDevice}');
         debugPrint('-------------------------------');
 
+        if (!mounted || currentToken != _securityCheckToken) {
+          return;
+        }
+
         setState(() {
           _isMockLocation = isMockSafeDevice || isMockGeolocator || isMockDetectFake;
           _isLoading = false;
         });
       } else {
         isMockSafeDevice = await SafeDevice.isMockLocation;
+
+        if (!mounted || currentToken != _securityCheckToken) {
+          return;
+        }
+
         setState(() {
           _isMockLocation = isMockSafeDevice;
           _isLoading = false;
         });
       }
     } catch (e) {
+      if (!mounted || currentToken != _securityCheckToken) {
+        return;
+      }
+
       debugPrint('Error en verificación: $e');
       setState(() {
         _isLoading = false;
       });
     }
+  }
+
+  Future<(bool, bool, bool)> _collectMockLocationSignals() async {
+    final firstPass = await Future.wait([
+      SafeDevice.isMockLocation,
+      _getGeolocatorMock(),
+      _getDetectFakeLocationMock(),
+    ]);
+
+    final firstPassMock = firstPass[0] || firstPass[1] || firstPass[2];
+    if (!firstPassMock) {
+      return (firstPass[0], firstPass[1], firstPass[2]);
+    }
+
+    await Future.delayed(const Duration(milliseconds: 800));
+
+    final secondPass = await Future.wait([
+      SafeDevice.isMockLocation,
+      _getGeolocatorMock(),
+      _getDetectFakeLocationMock(),
+    ]);
+
+    return (secondPass[0], secondPass[1], secondPass[2]);
   }
 
   Future<bool> _getGeolocatorMock() async {
