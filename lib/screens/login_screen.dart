@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:screen_protector/screen_protector.dart';
+import 'package:provider/provider.dart';
 import '../auth_service.dart';
+import '../session_service.dart';
 import 'home_screen.dart';
 import 'signup_screen.dart';
 
@@ -66,10 +68,13 @@ class _LoginScreenState extends State<LoginScreen> {
     if (mounted) {
       setState(() => _isLoading = false);
       if (success) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const HomeScreen()),
-        );
+        if (mounted) {
+          context.read<SessionService>().startSession();
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()),
+          );
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(

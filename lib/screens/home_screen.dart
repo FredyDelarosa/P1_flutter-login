@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../secure_storage_service.dart';
 import '../notification_service.dart';
+import '../session_service.dart';
 import 'login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -75,6 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('current_logged_in_user');
     if (mounted) {
+      context.read<SessionService>().stopSession();
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),
