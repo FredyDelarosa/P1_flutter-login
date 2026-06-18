@@ -1,8 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_protector/screen_protector.dart';
 import 'package:provider/provider.dart';
 import '../auth_service.dart';
 import '../session_service.dart';
+import '../security_gatekeeper.dart';
 import 'home_screen.dart';
 import 'signup_screen.dart';
 
@@ -222,6 +224,64 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
               ),
+              if (kDebugMode) ...[
+                const SizedBox(height: 16),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.blue.withOpacity(0.05),
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(color: Colors.blue.withOpacity(0.2)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          const Icon(Icons.bug_report_outlined, color: Colors.blue),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: Text(
+                              'Modo de Desarrollo Activo (Debug)',
+                              style: TextStyle(
+                                color: Colors.blue[900],
+                                fontWeight: FontWeight.bold,
+                                fontSize: 13,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+                      const Text(
+                        'La depuración USB está activa, pero no bloquea la app debido a la excepción de Debug (kDebugMode). Haz clic abajo para simular el comportamiento de Producción/Release.',
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 12,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      SizedBox(
+                        width: double.infinity,
+                        child: OutlinedButton.icon(
+                          onPressed: () {
+                            GlobalSecurityGatekeeper.forceBlockNotifier.value = true;
+                          },
+                          icon: const Icon(Icons.security_rounded),
+                          label: const Text('Simular Bloqueo (Producción)'),
+                          style: OutlinedButton.styleFrom(
+                            foregroundColor: Colors.blue[800],
+                            side: BorderSide(color: Colors.blue[800]!),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ],
           ),
         ),
