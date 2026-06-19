@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../secure_storage_service.dart';
+import '../sensitive_data_processor.dart';
 import '../notification_service.dart';
 import '../session_service.dart';
 import 'login_screen.dart';
@@ -15,6 +16,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final SecureStorageService _secureStorage = SecureStorageService();
+  final SensitiveDataProcessor _processor = SensitiveDataProcessor();
   Map<String, String> _sensitiveData = {};
   bool _isLoading = true;
   String _username = '';
@@ -129,6 +131,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ..._sensitiveData.entries.map((e) => _buildDataCard(e.key, e.value)),
                   const SizedBox(height: 32),
                   _buildWipeInfoCard(),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      final result = _processor.processCreditCard("4111222233334444", "123");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Procesado: $result')),
+                      );
+                    },
+                    child: const Text('Procesar Tarjeta (Prueba)'),
+                  ),
                 ],
               ),
             ),
